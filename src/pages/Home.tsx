@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -9,21 +10,46 @@ import {
 } from "react-native";
 
 export default function Home() {
+  const [skill, setSkill] = useState("");
+  const [allSkills, setAllSkills] = useState<String[]>([]);
+
+  function handleAddNewSkill() {
+    setAllSkills(prev => [...prev, skill]);
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome!</Text>
+      <Text style={styles.title}>Welcome, Caio!</Text>
 
       <TextInput
         style={styles.input}
         placeholder="New Skill"
         placeholderTextColor="#555"
+        onChangeText={setSkill}
       />
 
-      <TouchableOpacity style={styles.button} activeOpacity={.8}>
+      <TouchableOpacity
+        style={styles.button}
+        activeOpacity={0.8}
+        onPress={handleAddNewSkill}
+      >
         <Text style={styles.textButton}>Add</Text>
       </TouchableOpacity>
 
-      <Text style={[styles.title, { marginTop: 50}]}>My Skills</Text>
+      {!allSkills.length ? (
+        <Text style={[styles.title, { marginTop: 70, textAlign: "center" }]}>
+          Try to add a new skill!
+        </Text>
+      ) : (
+        <>
+          <Text style={[styles.title, { marginVertical: 50 }]}>My Skills</Text>
+          {allSkills.map((skill, index) => (
+            <TouchableOpacity style={styles.buttonSkill} key={`skill-${index}`}>
+              <Text style={styles.textSkill}>{skill}</Text>
+            </TouchableOpacity>
+          ))}
+        </>
+      )}
     </View>
   );
 }
@@ -53,15 +79,31 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   button: {
-    backgroundColor: "#a370f7",
-    padding: 15,
-    borderRadius: 7,
     alignItems: "center",
+    backgroundColor: "#a370f7",
+
+    padding: 15,
     marginTop: 20,
+
+    borderRadius: 7,
   },
   textButton: {
     color: "#ffffff",
     fontSize: 17,
+    fontWeight: "bold",
+  },
+  buttonSkill: {
+    backgroundColor: "#1f1e25",
+    padding: 20,
+    marginVertical: 10,
+
+    borderRadius: 50,
+
+    alignItems: "center",
+  },
+  textSkill: {
+    color: "#ffffff",
+    fontSize: 18,
     fontWeight: "bold",
   },
 });

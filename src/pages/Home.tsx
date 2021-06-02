@@ -25,6 +25,10 @@ export default function Home() {
     setAllSkills(prev => [...prev, data]);
   }
 
+  function handleRemoveSkill(id: string) {
+    setAllSkills(prev => prev.filter(skill => skill.id !== id));
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, Caio.</Text>
@@ -40,7 +44,7 @@ export default function Home() {
           Try to add a new skill!
         </Text>
       ) : (
-        <SkillCard skills={allSkills} />
+        <SkillCard skills={allSkills} handleRemoveSkill={handleRemoveSkill} />
       )}
     </View>
   );

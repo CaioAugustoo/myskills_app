@@ -1,22 +1,26 @@
 import React from "react";
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, FlatList } from "react-native";
 
 import { styles } from "./styles";
 
 export type SkillCardProps = {
-  skills: String[]
-}
+  skills: String[];
+};
 
 const SkillCard = ({ skills }: SkillCardProps) => {
   return (
     <>
       <Text style={styles.title}>My Skills</Text>
-      
-      {skills.map((skill, index) => (
-        <TouchableOpacity style={styles.buttonSkill} key={`skill-${index}`}>
-          <Text style={styles.textSkill}>{skill}</Text>
-        </TouchableOpacity>
-      ))}
+
+      <FlatList
+        data={skills}
+        keyExtractor={item => item}
+        renderItem={({ item }) => (
+          <TouchableOpacity style={styles.buttonSkill}>
+            <Text style={styles.textSkill}>{item}</Text>
+          </TouchableOpacity>
+        )}
+      />
     </>
   );
 };

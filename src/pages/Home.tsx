@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Platform,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
+import Button from "../components/Button";
+import SkillCard from "../components/SkillCard";
+import Input from "../components/Input";
 
 export default function Home() {
   const [skill, setSkill] = useState("");
   const [allSkills, setAllSkills] = useState<String[]>([]);
 
   function handleAddNewSkill() {
+    if (skill.length === 0) return;
     setAllSkills(prev => [...prev, skill]);
   }
 
@@ -21,34 +19,15 @@ export default function Home() {
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, Caio!</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="New Skill"
-        placeholderTextColor="#555"
-        onChangeText={setSkill}
-      />
-
-      <TouchableOpacity
-        style={styles.button}
-        activeOpacity={0.8}
-        onPress={handleAddNewSkill}
-      >
-        <Text style={styles.textButton}>Add</Text>
-      </TouchableOpacity>
+      <Input onChangeText={setSkill} placeholder="New Skill" />
+      <Button onPress={handleAddNewSkill}>Add</Button>
 
       {!allSkills.length ? (
         <Text style={[styles.title, { marginTop: 70, textAlign: "center" }]}>
           Try to add a new skill!
         </Text>
       ) : (
-        <>
-          <Text style={[styles.title, { marginVertical: 50 }]}>My Skills</Text>
-          {allSkills.map((skill, index) => (
-            <TouchableOpacity style={styles.buttonSkill} key={`skill-${index}`}>
-              <Text style={styles.textSkill}>{skill}</Text>
-            </TouchableOpacity>
-          ))}
-        </>
+        <SkillCard skills={allSkills} />
       )}
     </View>
   );
@@ -66,44 +45,6 @@ const styles = StyleSheet.create({
   title: {
     color: "#ffffff",
     fontSize: 24,
-    fontWeight: "bold",
-  },
-  input: {
-    backgroundColor: "#1f1e25",
-
-    color: "#ffffff",
-    fontSize: 18,
-
-    padding: Platform.OS === "ios" ? 15 : 10,
-    marginTop: 30,
-    borderRadius: 7,
-  },
-  button: {
-    alignItems: "center",
-    backgroundColor: "#a370f7",
-
-    padding: 15,
-    marginTop: 20,
-
-    borderRadius: 7,
-  },
-  textButton: {
-    color: "#ffffff",
-    fontSize: 17,
-    fontWeight: "bold",
-  },
-  buttonSkill: {
-    backgroundColor: "#1f1e25",
-    padding: 20,
-    marginVertical: 10,
-
-    borderRadius: 50,
-
-    alignItems: "center",
-  },
-  textSkill: {
-    color: "#ffffff",
-    fontSize: 18,
     fontWeight: "bold",
   },
 });

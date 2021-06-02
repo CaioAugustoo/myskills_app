@@ -1,5 +1,10 @@
 import React from "react";
-import { Text, TouchableOpacity, FlatList, GestureResponderEvent } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  FlatList,
+  GestureResponderEvent,
+} from "react-native";
 
 import { DataProps } from "../../pages/Home";
 
@@ -8,7 +13,6 @@ import { styles } from "./styles";
 export type SkillCardProps = {
   skills: DataProps[];
   handleRemoveSkill: (id: string) => void;
-  onPress?: () => void;
 };
 
 const SkillCard = ({ skills, handleRemoveSkill }: SkillCardProps) => {
@@ -20,7 +24,10 @@ const SkillCard = ({ skills, handleRemoveSkill }: SkillCardProps) => {
         data={skills}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.buttonSkill} onPress={() => handleRemoveSkill(item.id)}>
+          <TouchableOpacity
+            style={styles.buttonSkill}
+            onPress={() => handleRemoveSkill(item.id)}
+          >
             <Text style={styles.textSkill}>{item.title}</Text>
           </TouchableOpacity>
         )}
